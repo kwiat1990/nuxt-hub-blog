@@ -1,9 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <UContainer>
+  <div class="container">
     <div>About not found</div>
-  </UContainer>
+  </div>
 </template>
 
 <style scoped></style>
