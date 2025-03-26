@@ -1,2 +1,5 @@
 @import "tailwindcss";
-@import "@nuxt/ui";
+
+@utility container {
+    @apply mx-auto;
+}
