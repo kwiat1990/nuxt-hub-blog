@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@layer base {
+    html,
+    body,
+    #__nuxt {
+        @apply h-full;
+    }
+}
+
 @utility container {
     @apply mx-auto;
 }
