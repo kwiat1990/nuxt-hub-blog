@@ -2,6 +2,8 @@
 
 <template>
   <button type="button">
-    <slot />
+    <div class="flex items-center gap-2" data-test="button-label-wrapper">
+      <slot />
+    </div>
   </button>
 </template>
