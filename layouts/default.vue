@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import AppHeader from "~/components/app-header.vue";
+import Header from "~/components/Header.vue";
 </script>
 
 <template>
   <div class="grid grid-rows-[auto_1fr_auto] min-h-full">
-    <AppHeader />
+    <Header />
     <main>
       <slot />
     </main>
-    <AppFooter />
+    <Footer />
   </div>
 </template>
