@@ -7,29 +7,30 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest"
   },
   "dependencies": {
     "@nuxt/content": "3.4.0",
-    "@nuxt/eslint": "1.2.0",
     "@nuxt/fonts": "0.11.0",
     "@nuxt/icon": "1.11.0",
     "@nuxt/image": "1.10.0",
     "@nuxtjs/color-mode": "^3.5.2",
     "@tailwindcss/vite": "^4.0.16",
-    "eslint": "^9.0.0",
     "nuxt": "^3.16.1",
-    "prettier": "^3.5.3",
     "reka-ui": "^2.1.1",
     "tailwindcss": "^4.0.16",
-    "typescript": "^5.6.3",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
+    "@nuxt/eslint": "^1.2.0",
     "@nuxt/test-utils": "^3.17.2",
     "@vue/test-utils": "^2.4.6",
+    "eslint": "^9.23.0",
     "happy-dom": "^17.4.4",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
     "vitest": "^3.0.9"
   }
 }
