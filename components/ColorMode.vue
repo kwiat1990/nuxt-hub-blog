@@ -1,27 +1,52 @@
 <script setup lang="ts">
 const colorMode = useColorMode();
 
-const isDark = computed({
-  get() {
-    return colorMode.value === "dark";
+const toggleState = ref(false);
+
+const themes = {
+  system: {
+    name: "solar:monitor-linear",
+    color: "",
+    label: "System",
   },
-  set() {
-    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
+  light: {
+    name: "solar:sun-2-line-duotone",
+    color: "text-yellow-500",
+    label: "Light",
   },
-});
+  dark: {
+    name: "solar:moon-linear",
+    color: "text-blue-500",
+    label: "Dark",
+  },
+} as const;
+
+const currentMode = computed(
+  () => themes[colorMode.preference as keyof typeof themes],
+);
 </script>
 
 <template>
   <ClientOnly v-if="!colorMode?.forced">
-    <RekaSwitchRoot
-      v-model="isDark"
-      class="border data-[state=unchecked]:bg-stone-300 w-[32px] data-[state=checked]:bg-stone-500"
-    >
-      <RekaSwitchThumb
-        class="block w-3.5 my-auto transition-transform translate-x-0.5 will-change-transform data-[state=checked]:translate-x-full"
-      >
-        <Icon :name="isDark ? 'i-lucide-moon' : 'i-lucide-sun'" />
-      </RekaSwitchThumb>
-    </RekaSwitchRoot>
+    <RekaDropdownMenuRoot v-model:open="toggleState">
+      <RekaDropdownMenuTrigger class="block ml-auto mr-0">
+        <Icon :name="currentMode.name" :class="currentMode.color" size="24" />
+      </RekaDropdownMenuTrigger>
+      <RekaDropdownMenuPortal>
+        <RekaDropdownMenuContent class="outline-none bg-white p-2">
+          <RekaDropdownMenuItem
+            v-for="(theme, key) in themes"
+            :key="key"
+            :value="theme"
+            as="button"
+            class="flex items-center gap-2"
+            @click="colorMode.preference = key"
+          >
+            <Icon :class="theme.color" :name="theme.name" aria-hidden="true" />
+            {{ theme.label }}
+          </RekaDropdownMenuItem>
+        </RekaDropdownMenuContent>
+      </RekaDropdownMenuPortal>
+    </RekaDropdownMenuRoot>
   </ClientOnly>
 </template>
