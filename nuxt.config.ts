@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/image",
-    "@nuxt/test-utils",
+    "@nuxt/test-utils/module",
     "@nuxtjs/color-mode",
     ["reka-ui/nuxt", { prefix: "Reka" }],
   ],
