@@ -1,52 +1,69 @@
 <script setup lang="ts">
 const colorMode = useColorMode();
 
-const toggleState = ref(false);
+interface Theme {
+  icon: string;
+  color: string;
+  label: string;
+  value: string;
+}
 
-const themes = {
-  system: {
-    name: "solar:monitor-linear",
+const themes: Theme[] = [
+  {
+    icon: "solar:monitor-linear",
     color: "",
     label: "System",
+    value: "system",
   },
-  light: {
-    name: "solar:sun-2-line-duotone",
+  {
+    icon: "solar:sun-2-linear",
     color: "text-yellow-500",
     label: "Light",
+    value: "light",
   },
-  dark: {
-    name: "solar:moon-linear",
+  {
+    icon: "solar:moon-linear",
     color: "text-blue-500",
     label: "Dark",
+    value: "dark",
   },
-} as const;
+] as const;
 
-const currentMode = computed(
-  () => themes[colorMode.preference as keyof typeof themes],
-);
+const currentMode = computed(() => {
+  return (
+    themes.find((theme) => colorMode.preference === theme.value) ?? themes[0]
+  );
+});
+
+function setPreference(preference: Theme) {
+  colorMode.preference = preference.value;
+}
 </script>
 
 <template>
-  <ClientOnly v-if="!colorMode?.forced">
-    <RekaDropdownMenuRoot v-model:open="toggleState">
-      <RekaDropdownMenuTrigger class="block ml-auto mr-0">
-        <Icon :name="currentMode.name" :class="currentMode.color" size="24" />
-      </RekaDropdownMenuTrigger>
-      <RekaDropdownMenuPortal>
-        <RekaDropdownMenuContent class="outline-none bg-white p-2">
-          <RekaDropdownMenuItem
-            v-for="(theme, key) in themes"
-            :key="key"
-            :value="theme"
-            as="button"
-            class="flex items-center gap-2"
-            @click="colorMode.preference = key"
-          >
-            <Icon :class="theme.color" :name="theme.name" aria-hidden="true" />
-            {{ theme.label }}
-          </RekaDropdownMenuItem>
-        </RekaDropdownMenuContent>
-      </RekaDropdownMenuPortal>
-    </RekaDropdownMenuRoot>
-  </ClientOnly>
+  <ColorScheme placeholder="..." tag="div">
+    <Dropdown :items="themes" @select="setPreference" v-bind="$attrs">
+      <template #trigger>
+        <Icon
+          v-if="currentMode"
+          :aria-label="currentMode.label"
+          :class="currentMode.color"
+          :name="currentMode.icon"
+          class="block!"
+          size="24"
+        />
+      </template>
+      <template #item="{ item }">
+        <button class="flex items-center gap-2 p-2">
+          <Icon
+            :class="item.color"
+            :name="item.icon"
+            aria-hidden="true"
+            size="24"
+          />
+          {{ item.label }}
+        </button>
+      </template>
+    </Dropdown>
+  </ColorScheme>
 </template>
